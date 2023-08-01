@@ -17,23 +17,28 @@ fn main() -> Result<(), diesel::result::Error> {
 
     let db = db::database::open_connection();
     let repository = core::task::repository::TaskRepository { db: db };
-    let service = &mut core::task::service::TaskService {
+    let service = core::task::service::TaskService {
         repository: repository,
     };
+    let controller = &mut core::task::controller::TaskController { service: service };
 
-    let tasks = service.repository.get_all_tasks()?;
+    // let tasks = service.repository.get_all_tasks()?;
 
-    println!("{:?}", tasks);
+    // println!("{:?}", tasks);
 
-    println!("- - - - -");
-    println!("- - - - -");
-    println!("- - - - -");
+    // println!("- - - - -");
+    // println!("- - - - -");
+    // println!("- - - - -");
 
-    println!("{}, {}", tasks[49].id, tasks[49].title);
+    // println!("{}, {}", tasks[49].id, tasks[49].title);
 
-    println!("- - - - -");
-    println!("- - - - -");
-    println!("- - - - -");
+    // println!("- - - - -");
+    // println!("- - - - -");
+    // println!("- - - - -");
+
+    let tasksJSON = controller.read(2).unwrap();
+
+    println!("{:?}", tasksJSON);
 
     Ok(())
 }
